@@ -117,7 +117,6 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadInt32("MapID");
             packet.ReadInt32("DifficultyID");
             packet.ReadInt32("TimeLeft");
-
             packet.ReadBit("Locked");
             packet.ReadBit("Extended");
         }

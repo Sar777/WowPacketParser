@@ -8,10 +8,10 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
     {
         public static void ReadCliRideTicket(Packet packet, params object[] idx)
         {
-            packet.ReadPackedGuid128("RequesterGuid", idx);
-            packet.ReadInt32("Id", idx);
-            packet.ReadInt32("Type", idx);
-            packet.ReadTime("Time", idx);
+            packet.ReadPackedGuid128("RequesterGuid: [" + packet.Position + "] : ", idx);
+            packet.ReadInt32("Id: [" + packet.Position + "] : ", idx);
+            packet.ReadInt32("Type: [" + packet.Position + "] : ", idx);
+            packet.ReadTime("Time: [" + packet.Position + "] : ", idx);
         }
 
         public static void ReadLFGBlackList(Packet packet, params object[] idx)
@@ -257,17 +257,17 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             ReadCliRideTicket(packet);
 
-            packet.ReadInt32("Slot");
-            packet.ReadInt32("AvgWaitTime");
-            packet.ReadInt32("QueuedTime");
+            packet.ReadInt32("Slot: [" + packet.Position + "] : ");
+            packet.ReadInt32("AvgWaitTime: [" + packet.Position + "] : ");
+            packet.ReadInt32("QueuedTime: [" + packet.Position + "] : ");
 
             for (int i = 0; i < 3; i++)
             {
-                packet.ReadInt32("AvgWaitTimeByRole", i);
-                packet.ReadByte("LastNeeded", i);
+                packet.ReadInt32("AvgWaitTimeByRole: [" + packet.Position + "] : ", i);
+                packet.ReadByte("LastNeeded: [" + packet.Position + "] : ", i);
             }
 
-            packet.ReadInt32("AvgWaitTimeMe");
+            packet.ReadInt32("AvgWaitTimeMe: [" + packet.Position + "] : ");
         }
 
         [Parser(Opcode.SMSG_LFG_PROPOSAL_UPDATE)]

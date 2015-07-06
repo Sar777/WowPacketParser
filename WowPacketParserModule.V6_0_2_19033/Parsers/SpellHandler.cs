@@ -1064,5 +1064,17 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             packet.ReadPackedGuid128("TargetGUID");
         }
+
+        [Parser(Opcode.SMSG_UPDATE_COMBO_POINTS)]
+        public static void ReadUpdateComboPoints(Packet packet)
+        {
+            packet.ReadPackedGuid128("Caster");
+            packet.ReadPackedGuid128("Target");
+            packet.ReadByte("Unk");
+            packet.ReadByte("Unk2");
+            for (var i = 0; i < 20; ++i)
+                packet.ReadByte("Unk4");
+        }
+
     }
 }

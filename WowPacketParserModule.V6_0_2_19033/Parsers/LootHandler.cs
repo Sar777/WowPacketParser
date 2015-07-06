@@ -156,6 +156,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         }
 
         [Parser(Opcode.SMSG_START_LOOT_ROLL)]
+        
         public static void HandleStartLootRoll(Packet packet)
         {
             packet.ReadPackedGuid128("LootObj");

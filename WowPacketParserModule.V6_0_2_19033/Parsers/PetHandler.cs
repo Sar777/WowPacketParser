@@ -99,6 +99,12 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadVector3("ActionPosition");
         }
 
+        [Parser(Opcode.CMSG_PET_ABANDON)]
+        public static void HandlePetAbandon(Packet packet)
+        {
+            packet.ReadPackedGuid128("PetGUID");
+        }
+
         public static void ReadPetRenameData(Packet packet)
         {
             packet.ReadPackedGuid128("PetGUID");
@@ -240,6 +246,33 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             packet.ReadInt32<SpellId>("SpellID");
             packet.ReadByteE<PetFeedback>("Response");
+        }
+
+        [Parser(Opcode.SMSG_SET_PET_SPECIALIZATION)]
+        public static void HandleSetPetSpecialization(Packet packet)
+        {
+            packet.ReadInt16("Spec Id");
+        }
+
+        [Parser(Opcode.SMSG_PET_SLOT_UPDATED)]
+        public static void HandlePetSlotUpdated(Packet packet)
+        {
+            packet.ReadInt32("Pet Number");
+            packet.ReadInt32("Dest slot");
+            packet.ReadInt32("Src slot");
+            packet.ReadInt32("UNK");
+        }
+        [Parser(Opcode.CMSG_SET_PET_SLOT)]
+        public static void HandleSetPetSlot(Packet packet)
+        {
+            packet.ReadInt32("Pet number");
+            packet.ReadByte("New slot");
+            packet.ReadPackedGuid128("StableGuid");
+        }
+        [Parser(Opcode.SMSG_STABLE_RESULT)]
+        public static void HandleStableResult(Packet packet)
+        {
+            packet.ReadByte("Result");
         }
     }
 }

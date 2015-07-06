@@ -7,7 +7,7 @@ namespace WowPacketParser.Enums
         Rage          = 1,
         Focus         = 2,
         Energy        = 3,
-        Happiness     = 4, // removed in >4.x
+        CombatPoints  = 4, // removed in >4.x
         Rune          = 5,
         RunicPower    = 6,
         SoulShards    = 7,

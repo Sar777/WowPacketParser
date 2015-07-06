@@ -71,5 +71,11 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             packet.ReadBitsE<TaxiError>("Result", 4);
         }
+
+        [Parser(Opcode.CMSG_TAXI_REQUEST_EARLY_LANDING)]
+        public static void HandleTaxiRequestEarlyLanding(Packet packet)
+        {
+            packet.ReadInt32("Unk");
+        }
     }
 }
