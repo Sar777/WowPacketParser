@@ -31,7 +31,10 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             var type = packet.ReadUInt32E<DB2Hash>("TableHash");
             var entry = (uint)packet.ReadInt32("RecordID");
+            var allow = (int)entry >= 0;
             packet.ReadTime("Timestamp");
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V6_2_0_20173))
+                allow = packet.ReadBit("Allow");
 
             var size = packet.ReadInt32("Size");
             var data = packet.ReadBytes(size);
@@ -39,7 +42,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
 
             var hotfixData = new HotfixData();
 
-            if ((int) entry >= 0)
+            if (allow)
             {
                 if (Storage.HotfixDataStore.ContainsKey(Tuple.Create(type, (int)entry)))
                 {
@@ -592,9 +595,12 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
                     spellMisc.RangeIndex = db2File.ReadUInt32("RangeIndex");
                     spellMisc.Speed = db2File.ReadSingle("Speed");
 
-                    spellMisc.SpellVisualID = new uint[2];
-                    for (var i = 0; i < 2; ++i)
-                        spellMisc.SpellVisualID[i] = db2File.ReadUInt32("SpellVisualID", i);
+                    if (ClientVersion.RemovedInVersion(ClientVersionBuild.V6_2_0_20173))
+                    {
+                        spellMisc.SpellVisualID = new uint[2];
+                        for (var i = 0; i < 2; ++i)
+                            spellMisc.SpellVisualID[i] = db2File.ReadUInt32("SpellVisualID", i);
+                    }
 
                     spellMisc.SpellIconID = db2File.ReadUInt32("SpellIconID");
                     spellMisc.ActiveIconID = db2File.ReadUInt32("ActiveIconID");
