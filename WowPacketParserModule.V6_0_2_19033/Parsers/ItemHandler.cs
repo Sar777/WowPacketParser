@@ -28,8 +28,8 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             if (hasModifications)
             {
                 var mask = packet.ReadUInt32();
-                for (var j = 1; j <= 8; ++j)
-                    if ((mask & (1u << (j - 1))) != 0)
+                for (var j = 0; mask != 0; mask >>= 1, ++j)
+                    if ((mask & 1) != 0)
                         packet.ReadInt32(((ItemModifier)j).ToString(), indexes);
             }
 
@@ -422,6 +422,9 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             packet.ReadPackedGuid128("ItemGuid");
             packet.ReadInt32("SpellID");
+
+            if (ClientVersion.AddedInVersion(ClientVersionBuild.V6_2_0_20173))
+                packet.ReadInt32("Duration");
         }
 
         [Parser(Opcode.SMSG_CROSSED_INEBRIATION_THRESHOLD)]
@@ -474,6 +477,12 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
 
             packet.ReadPackedGuid128("Id");
             ReadCliItemTextCache(packet, "Item");
+        }
+
+        [Parser(Opcode.CMSG_WRAP_ITEM)]
+        public static void HandleWrapItem(Packet packet)
+        {
+            ReadInvUpdate(packet, "InvUpdate");
         }
     }
 }

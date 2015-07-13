@@ -169,7 +169,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadBit("NPETutorialsEnabled");
             packet.ReadBit("TwitterEnabled");
 
-            var bit61 = ClientVersion.AddedInVersion(ClientVersionBuild.V6_1_0_19702) ? (bool)packet.ReadBit("Unk bit61") : false;
+            var bit61 = ClientVersion.AddedInVersion(ClientVersionBuild.V6_1_0_19702) && packet.ReadBit("Unk bit61");
 
             if (hasEuropaTicketSystemStatus)
                 ReadCliEuropaTicketConfig(packet, "EuropaTicketSystemStatus");
@@ -442,6 +442,23 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
                 packet.ReadBit("ToyIsFavorite", i);
         }
 
+        [Parser(Opcode.SMSG_ACCOUNT_HEIRLOOM_UPDATE)]
+        public static void HandleAccountHeirloomUpdate(Packet packet)
+        {
+            packet.ReadBit("IsFullUpdate");
+
+            packet.ReadInt32("Unk");
+
+            var int32 = packet.ReadInt32("ItemCount");
+            var int16 = packet.ReadInt32("FlagsCount");
+
+            for (int i = 0; i < int32; i++)
+                packet.ReadInt32("ItemID", i);
+
+            for (int i = 0; i < int16; i++)
+                packet.ReadInt32("Flags", i);
+        }
+
         [Parser(Opcode.SMSG_PLAY_SOUND)]
         public static void HandlePlaySound(Packet packet)
         {
@@ -497,7 +514,9 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             Storage.PageTexts.Add(entry, pageText, packet.TimeSpan);
         }
 
+        [Parser(Opcode.SMSG_PLAY_ONE_SHOT_ANIM_KIT)]
         [Parser(Opcode.SMSG_SET_AI_ANIM_KIT)]
+        [Parser(Opcode.SMSG_SET_MELEE_ANIM_KIT)]
         public static void HandleSetAIAnimKit(Packet packet)
         {
             packet.ReadPackedGuid128("Unit");
@@ -586,13 +605,6 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadBit("Paused");
         }
 
-        [Parser(Opcode.SMSG_PLAY_ONE_SHOT_ANIM_KIT)]
-        public static void HandlePlayOneShotAnimKit(Packet packet)
-        {
-            packet.ReadPackedGuid128("Unit");
-            packet.ReadUInt16("AnimKitID");
-        }
-
         [Parser(Opcode.CMSG_BUG_REPORT)]
         public static void HandleBugReport(Packet packet)
         {
@@ -610,8 +622,8 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             packet.ReadPackedGuid128("ResurrectOffererGUID");
 
-            packet.ReadInt32("ResurrectOffererVirtualRealmAddress");
-            packet.ReadInt32("PetNumber");
+            packet.ReadUInt32("ResurrectOffererVirtualRealmAddress");
+            packet.ReadUInt32("PetNumber");
             packet.ReadInt32("SpellID");
 
             var len = packet.ReadBits(6);
