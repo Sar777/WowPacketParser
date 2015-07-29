@@ -197,9 +197,9 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         [Parser(Opcode.SMSG_CALENDAR_EVENT_INVITE)]
         public static void HandleCalendarEventInvite(Packet packet)
         {
-            packet.ReadPackedGuid128("InviteGUID");
+           // packet.ReadPackedGuid128("InviteGUID");
             packet.ReadUInt64("EventID");
-            packet.ReadUInt64("InviteID");
+          //  packet.ReadUInt64("InviteID");
             packet.ReadByte("Level");
             packet.ReadByteE<CalendarEventStatus>("Status");
             packet.ReadByteE<CalendarEventType>("Type");
@@ -214,6 +214,18 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadUInt64("EventID");
             packet.ReadByteE<CalendarModerationRank>("Status"); // enum NC
             packet.ReadBit("ClearPending");
+        }
+
+        [Parser(Opcode.CMSG_CALENDAR_EVENT_INVITE)]
+        public static void HandleCalendarEventInviteClient(Packet packet)
+        {
+            packet.ReadUInt64("EventID");
+            packet.ReadUInt64("ModeratorID");
+
+            var nameLen = packet.ReadBits(9);
+            packet.ReadBit("Creating");
+            packet.ReadBit("IsSignUp");
+            packet.ReadWoWString("Name", nameLen);
         }
 
         [Parser(Opcode.SMSG_CALENDAR_EVENT_INVITE_NOTES)]

@@ -673,14 +673,41 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadInt32("PlayStyle", indexes);
             packet.ReadInt32("Availability", indexes);
             packet.ReadInt32("SecondsSinceCreated", indexes);
+            packet.ReadInt32("Unk", indexes);
 
             packet.ResetBitReader();
 
             var lenName = packet.ReadBits(7);
             var lenComment = packet.ReadBits(10);
 
-            packet.ReadWoWString("GuildName", lenName, indexes);
-            packet.ReadWoWString("Comment", lenComment, indexes);
+           packet.ReadWoWString("GuildName", lenName, indexes);
+           packet.ReadWoWString("Comment", lenComment, indexes);
+        }
+
+        [Parser(Opcode.CMSG_GUILD_SET_GUILD_MASTER)]
+        public static void HandleGuildSetGuildMaster(Packet packet)
+        {
+            var nameLength = packet.ReadBits(9);
+            packet.ReadWoWString("New GuildMaster name", nameLength);
+        }
+
+        [Parser(Opcode.CMSG_GUILD_QUERY_MEMBERS_FOR_RECIPE)]
+        public static void HandleGuildQueryMembersForRecipe(Packet packet)
+        {
+            packet.ReadPackedGuid128("Guild GUID");
+            packet.ReadInt32("Skill ID");
+            packet.ReadUInt32("SpellID");
+            packet.ReadUInt32("Skill Value");
+        }
+
+        [Parser(Opcode.SMSG_GUILD_MEMBERS_WITH_RECIPE)]
+        public static void HandleGuildMembersWithRecipe(Packet packet)
+        {
+            packet.ReadInt32("SkillID");
+            packet.ReadUInt32("SpellID");
+            var count = packet.ReadUInt32("Count");
+            for (int i = 0; i < count; ++i)
+                packet.ReadPackedGuid128("MemberGUID", i);
         }
 
         [Parser(Opcode.SMSG_LF_GUILD_RECRUITS)]
@@ -978,6 +1005,17 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
 
             packet.ReadBit("BankOnly");
             packet.ReadBit("AutoStore");
+        }
+
+        [Parser(Opcode.CMSG_LF_GUILD_ADD_RECRUIT)]
+        public static void HandleLFGuildAddRecruit(Packet packet)
+        {
+            packet.ReadPackedGuid128("Guild GUID");
+            packet.ReadUInt32E<GuildFinderOptionsRoles>("Class Roles");
+            packet.ReadUInt32E<GuildFinderOptionsInterest>("Guild Interests");
+            packet.ReadUInt32E<GuildFinderOptionsAvailability>("Availability");
+
+            packet.ReadWoWString("Comment", packet.ReadBits(10));
         }
     }
 }
