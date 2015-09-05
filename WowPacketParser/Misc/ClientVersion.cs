@@ -120,7 +120,8 @@ namespace WowPacketParser.Misc
             new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V6_2_0_20201, new DateTime(2015, 06, 26)),
             new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V6_2_0_20216, new DateTime(2015, 07, 02)),
             new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V6_2_0_20253, new DateTime(2015, 07, 09)),
-            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V6_2_0_20338, new DateTime(2015, 07, 27))
+            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V6_2_0_20338, new DateTime(2015, 07, 27)),
+            new KeyValuePair<ClientVersionBuild, DateTime>(ClientVersionBuild.V6_2_2_20444, new DateTime(2015, 09, 01))
         };
 
         private static ClientType _expansion;
@@ -226,6 +227,7 @@ namespace WowPacketParser.Misc
                     case ClientVersionBuild.V6_2_0_20216:
                     case ClientVersionBuild.V6_2_0_20253:
                     case ClientVersionBuild.V6_2_0_20338:
+                    case ClientVersionBuild.V6_2_2_20444:
                         return ClientVersionBuild.V6_0_2_19033;
                     default:
                         return Build;
@@ -266,7 +268,7 @@ namespace WowPacketParser.Misc
 
             for (var i = 1; i < ClientBuilds.Length; i++)
                 if (ClientBuilds[i].Value >= time)
-                    return ClientBuilds[i - 1].Key;
+                    return ClientBuilds[i].Key;
 
             return ClientBuilds[ClientBuilds.Length - 1].Key;
         }
