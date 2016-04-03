@@ -855,8 +855,8 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             packet.ReadPackedGuid128("Member");
             packet.ReadInt32("SkillLineID");
-            packet.ReadInt32("SkillStep");
             packet.ReadInt32("SkillRank");
+            packet.ReadInt32("SkillStep");      
             for (int i = 0; i < 0x12C; i++)
                 packet.ReadByte("SkillLineBitArray", i);
         }
@@ -1007,6 +1007,7 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadBit("AutoStore");
         }
 
+<<<<<<< HEAD
         [Parser(Opcode.CMSG_LF_GUILD_ADD_RECRUIT)]
         public static void HandleLFGuildAddRecruit(Packet packet)
         {
@@ -1016,6 +1017,25 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadUInt32E<GuildFinderOptionsAvailability>("Availability");
 
             packet.ReadWoWString("Comment", packet.ReadBits(10));
+=======
+        [Parser(Opcode.CMSG_GUILD_QUERY_MEMBERS_FOR_RECIPE)]
+        public static void HandleGuildQueryMembersForRecipe(Packet packet)
+        {
+            packet.ReadPackedGuid128("GuildGUID");
+            packet.ReadUInt32("SkillLineID");
+            packet.ReadUInt32("SpellID");
+            packet.ReadUInt32("UniqueBit");
+        }
+
+        [Parser(Opcode.SMSG_GUILD_MEMBERS_WITH_RECIPE)]
+        public static void HandleGuildMembersWithRecipe(Packet packet)
+        {
+            packet.ReadUInt32("SkillLineID");
+            packet.ReadUInt32("SpellID");
+            var count = packet.ReadInt32("MembersCount");
+            for (var i = 0; i < count; ++i)
+                packet.ReadPackedGuid128("Member", i);
+>>>>>>> 96afa7dabd3ebfcbd0222112746564ea532731d6
         }
     }
 }
