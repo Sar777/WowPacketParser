@@ -1006,36 +1006,5 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
             packet.ReadBit("BankOnly");
             packet.ReadBit("AutoStore");
         }
-
-<<<<<<< HEAD
-        [Parser(Opcode.CMSG_LF_GUILD_ADD_RECRUIT)]
-        public static void HandleLFGuildAddRecruit(Packet packet)
-        {
-            packet.ReadPackedGuid128("Guild GUID");
-            packet.ReadUInt32E<GuildFinderOptionsRoles>("Class Roles");
-            packet.ReadUInt32E<GuildFinderOptionsInterest>("Guild Interests");
-            packet.ReadUInt32E<GuildFinderOptionsAvailability>("Availability");
-
-            packet.ReadWoWString("Comment", packet.ReadBits(10));
-=======
-        [Parser(Opcode.CMSG_GUILD_QUERY_MEMBERS_FOR_RECIPE)]
-        public static void HandleGuildQueryMembersForRecipe(Packet packet)
-        {
-            packet.ReadPackedGuid128("GuildGUID");
-            packet.ReadUInt32("SkillLineID");
-            packet.ReadUInt32("SpellID");
-            packet.ReadUInt32("UniqueBit");
-        }
-
-        [Parser(Opcode.SMSG_GUILD_MEMBERS_WITH_RECIPE)]
-        public static void HandleGuildMembersWithRecipe(Packet packet)
-        {
-            packet.ReadUInt32("SkillLineID");
-            packet.ReadUInt32("SpellID");
-            var count = packet.ReadInt32("MembersCount");
-            for (var i = 0; i < count; ++i)
-                packet.ReadPackedGuid128("Member", i);
->>>>>>> 96afa7dabd3ebfcbd0222112746564ea532731d6
-        }
     }
 }

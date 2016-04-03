@@ -819,23 +819,5 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
         {
             packet.ReadInt32("Percent");
         }
-<<<<<<< HEAD
-        [Parser(Opcode.CMSG_CHANGE_BAG_SLOT_FLAG)]
-        public static void HandleChangeBagSlotFlag(Packet packet)
-        {
-            packet.ReadByte("Bags");
-            packet.ReadInt16("Unk1");
-            packet.ReadByte("Unk2");
-            packet.ReadInt32("Flags");
-            packet.ReadBit("Ignore Sort");
-=======
-
-        [Parser(Opcode.CMSG_TOY_SET_FAVORITE)]
-        public static void HandleToySetFavorite(Packet packet)
-        {
-            packet.ReadUInt32("ItemID");
-            packet.ReadBit("Favorite");
->>>>>>> b47a4f86ed411758520c1ed7ab1732820ad0830a
-        }
     }
 }
