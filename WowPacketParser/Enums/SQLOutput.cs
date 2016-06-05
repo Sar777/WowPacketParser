@@ -5,10 +5,12 @@
 // ReSharper disable InconsistentNaming
         creature,
         creature_addon,
+        creature_animkit,
         creature_equip_template,
         creature_model_info,
         creature_template,
         creature_template_addon,
+        creature_template_animkit,
         creature_text,
         gameobject,
         gameobject_template,

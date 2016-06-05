@@ -82,6 +82,35 @@ namespace WowPacketParser.SQL.Builders
                 });
         }
 
+        [BuilderMethod]
+        public static string CreatureTemplateAnimKit()
+        {
+            if (Storage.CreatureTemplateAnimKits.IsEmpty())
+            {
+                return string.Empty;
+            }
+
+            if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_template_animkit))
+                return string.Empty;
+            var rows = new RowList<CreatureTemplateAnimKit>();
+            foreach (var animKit in Storage.CreatureTemplateAnimKits)
+            {
+                var row = new Row<CreatureTemplateAnimKit>();
+                row.Data.Entry = animKit.Item1.Entry;
+                row.Data.AIID = animKit.Item1.AIID;
+                row.Data.MovementID = animKit.Item1.MovementID;
+                row.Data.MeleeID = animKit.Item1.MeleeID;
+                row.Comment = StoreGetters.GetName(StoreNameType.Unit, (int)animKit.Item1.Entry, false);
+
+                if (rows.ContainsKey(row))
+                    continue;
+
+                rows.Add(row);
+            }
+
+            return new SQLInsert<CreatureTemplateAnimKit>(rows).Build();
+        }
+
         [BuilderMethod(Units = true)]
         public static string ModelData(Dictionary<WowGuid, Unit> units)
         {

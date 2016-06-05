@@ -291,9 +291,18 @@ namespace WowPacketParserModule.V6_0_2_19033.Parsers
 
             if (hasAnimKitCreate) // 538
             {
-                packet.ReadUInt16("AiID", index);
-                packet.ReadUInt16("MovementID", index);
-                packet.ReadUInt16("MeleeID", index);
+                moveInfo.AnimKitAIID = packet.ReadUInt16("AiID", index);
+                moveInfo.AnimKitMovementID = packet.ReadUInt16("MovementID", index);
+                moveInfo.AnimKitMeleeID = packet.ReadUInt16("MeleeID", index);
+
+                CreatureTemplateAnimKit creatureTemplateAnimKit = new CreatureTemplateAnimKit
+                {
+                    Entry = guid.GetEntry(),
+                    AIID = moveInfo.AnimKitAIID,
+                    MovementID = moveInfo.AnimKitMovementID,
+                    MeleeID = moveInfo.AnimKitMeleeID
+                };
+                Storage.CreatureTemplateAnimKits.Add(creatureTemplateAnimKit, packet.TimeSpan);
             }
 
             if (hasRotation) // 552

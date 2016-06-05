@@ -401,6 +401,7 @@
     <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Misc\FileCompressionAttribute.cs" />
     <Compile Include="Misc\Filters.cs" />
+    <Compile Include="Misc\HighGuid.cs" />
     <Compile Include="Misc\WowGuid.cs" />
     <Compile Include="Misc\LfgEntry.cs" />
     <Compile Include="Misc\Logger.cs" />
@@ -504,10 +505,12 @@
     <Compile Include="Store\Objects\ChrUpgradeTier.cs" />
     <Compile Include="Store\Objects\Creature.cs" />
     <Compile Include="Store\Objects\CreatureAddon.cs" />
+    <Compile Include="Store\Objects\CreatureAnimKit.cs" />
     <Compile Include="Store\Objects\CreatureDB2.cs" />
     <Compile Include="Store\Objects\CreatureDifficulty.cs" />
     <Compile Include="Store\Objects\CreatureEquipment.cs" />
     <Compile Include="Store\Objects\CreatureTemplateAddon.cs" />
+    <Compile Include="Store\Objects\CreatureTemplateAnimKit.cs" />
     <Compile Include="Store\Objects\CreatureText.cs" />
     <Compile Include="Store\Objects\CurvePoint.cs" />
     <Compile Include="Store\Objects\GameObject.cs" />

@@ -73,6 +73,9 @@ namespace WowPacketParser.Store
         public static readonly DataBag<QuestVisualEffect> QuestVisualEffects = new DataBag<QuestVisualEffect>(new List<SQLOutput> { SQLOutput.quest_template }); 
         public static readonly DataBag<CreatureTemplate> CreatureTemplates = new DataBag<CreatureTemplate>(new List<SQLOutput> { SQLOutput.creature_template });
 
+        // Creature Template AnimKit
+        public static readonly DataBag<CreatureTemplateAnimKit> CreatureTemplateAnimKits = new DataBag<CreatureTemplateAnimKit>(new List<SQLOutput> { SQLOutput.creature_template_animkit });
+
         // Vendor & trainer
         public static readonly DataBag<NpcTrainer> NpcTrainers = new DataBag<NpcTrainer>(new List<SQLOutput> { SQLOutput.npc_trainer });
         public static readonly DataBag<NpcVendor> NpcVendors = new DataBag<NpcVendor>(new List<SQLOutput> { SQLOutput.npc_vendor });
@@ -148,6 +151,7 @@ namespace WowPacketParser.Store
             QuestTemplates.Clear();
             QuestObjectives.Clear();
             CreatureTemplates.Clear();
+            CreatureTemplateAnimKits.Clear();
 
             NpcTrainers.Clear();
             NpcVendors.Clear();

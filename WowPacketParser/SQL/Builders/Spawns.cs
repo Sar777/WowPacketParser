@@ -50,6 +50,7 @@ namespace WowPacketParser.SQL.Builders
             uint count = 0;
             var rows  = new RowList<Creature>();
             var addonRows = new RowList<CreatureAddon>();
+            var animKitRows = new RowList<CreatureAnimKit>();
             foreach (var unit in units)
             {
                 Row<Creature> row = new Row<Creature>();
@@ -162,9 +163,9 @@ namespace WowPacketParser.SQL.Builders
                     row.Comment += " (Auras: " + commentAuras + ")";
                 }
 
-                var addonRow = new Row<CreatureAddon>();
                 if (Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_addon))
                 {
+                    var addonRow = new Row<CreatureAddon>();
                     addonRow.Data.GUID = "@CGUID+" + count;
                     addonRow.Data.PathID = 0;
                     addonRow.Data.Mount = creature.Mount.GetValueOrDefault(0);
@@ -176,6 +177,17 @@ namespace WowPacketParser.SQL.Builders
                     if (!string.IsNullOrWhiteSpace(auras))
                         addonRow.Comment += " - " + commentAuras;
                     addonRows.Add(addonRow);
+                }
+
+                if (Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_animkit))
+                {
+                    var animKitRow = new Row<CreatureAnimKit>();
+                    animKitRow.Data.GUID = "@CGUID+" + count;
+                    animKitRow.Data.AIID = creature.Movement.AnimKitAIID;
+                    animKitRow.Data.MovementID = creature.Movement.AnimKitMovementID;
+                    animKitRow.Data.MeleeID = creature.Movement.AnimKitMeleeID;
+                    animKitRow.Comment = StoreGetters.GetName(StoreNameType.Unit, (int) unit.Key.GetEntry(), false);
+                    animKitRows.Add(animKitRow);
                 }
 
                 if (creature.IsTemporarySpawn())
@@ -213,6 +225,14 @@ namespace WowPacketParser.SQL.Builders
                 result.Append(addonDelete.Build());
                 var addonSql = new SQLInsert<CreatureAddon>(addonRows, false);
                 result.Append(addonSql.Build());
+            }
+
+            if (Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_animkit))
+            {
+                var animKitDelete = new SQLDelete<CreatureAnimKit>(Tuple.Create("@CGUID+0", "@CGUID+" + count));
+                result.Append(animKitDelete.Build());
+                var animKitSql = new SQLInsert<CreatureAnimKit>(animKitRows, false);
+                result.Append(animKitSql.Build());
             }
 
             return result.ToString();

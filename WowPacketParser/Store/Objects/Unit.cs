@@ -119,8 +119,6 @@ namespace WowPacketParser.Store.Objects
             CombatReach   = UpdateFields.GetValue<UnitField, float?>(UnitField.UNIT_FIELD_COMBATREACH);
             HoverHeight   = UpdateFields.GetValue<UnitField, float?>(UnitField.UNIT_FIELD_HOVERHEIGHT);
 
-
-
             if (ClientVersion.AddedInVersion(ClientVersionBuild.V5_4_0_17359))
             {
                 PowerType = UpdateFields.GetEnum<UnitField, PowerType?>(UnitField.UNIT_FIELD_DISPLAY_POWER);
