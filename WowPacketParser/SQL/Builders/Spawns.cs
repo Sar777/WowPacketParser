@@ -50,7 +50,7 @@ namespace WowPacketParser.SQL.Builders
             uint count = 0;
             var rows  = new RowList<Creature>();
             var addonRows = new RowList<CreatureAddon>();
-            var animKitRows = new RowList<CreatureAnimKit>();
+            var animKitRows = new RowList<CreatureAnimkit>();
             foreach (var unit in units)
             {
                 Row<Creature> row = new Row<Creature>();
@@ -181,7 +181,7 @@ namespace WowPacketParser.SQL.Builders
 
                 if (Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_animkit))
                 {
-                    var animKitRow = new Row<CreatureAnimKit>();
+                    var animKitRow = new Row<CreatureAnimkit>();
                     animKitRow.Data.GUID = "@CGUID+" + count;
                     animKitRow.Data.AIID = creature.Movement.AnimKitAIID;
                     animKitRow.Data.MovementID = creature.Movement.AnimKitMovementID;
@@ -229,9 +229,9 @@ namespace WowPacketParser.SQL.Builders
 
             if (Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_animkit))
             {
-                var animKitDelete = new SQLDelete<CreatureAnimKit>(Tuple.Create("@CGUID+0", "@CGUID+" + count));
+                var animKitDelete = new SQLDelete<CreatureAnimkit>(Tuple.Create("@CGUID+0", "@CGUID+" + count));
                 result.Append(animKitDelete.Build());
-                var animKitSql = new SQLInsert<CreatureAnimKit>(animKitRows, false);
+                var animKitSql = new SQLInsert<CreatureAnimkit>(animKitRows, false);
                 result.Append(animKitSql.Build());
             }
 

@@ -74,7 +74,7 @@ namespace WowPacketParser.Store
         public static readonly DataBag<CreatureTemplate> CreatureTemplates = new DataBag<CreatureTemplate>(new List<SQLOutput> { SQLOutput.creature_template });
 
         // Creature Template AnimKit
-        public static readonly DataBag<CreatureTemplateAnimKit> CreatureTemplateAnimKits = new DataBag<CreatureTemplateAnimKit>(new List<SQLOutput> { SQLOutput.creature_template_animkit });
+        public static readonly DataBag<CreatureTemplateAnimkit> CreatureTemplateAnimKits = new DataBag<CreatureTemplateAnimkit>(new List<SQLOutput> { SQLOutput.creature_template_animkit });
 
         // Vendor & trainer
         public static readonly DataBag<NpcTrainer> NpcTrainers = new DataBag<NpcTrainer>(new List<SQLOutput> { SQLOutput.npc_trainer });

@@ -92,10 +92,10 @@ namespace WowPacketParser.SQL.Builders
 
             if (!Settings.SQLOutputFlag.HasAnyFlagBit(SQLOutput.creature_template_animkit))
                 return string.Empty;
-            var rows = new RowList<CreatureTemplateAnimKit>();
+            var rows = new RowList<CreatureTemplateAnimkit>();
             foreach (var animKit in Storage.CreatureTemplateAnimKits)
             {
-                var row = new Row<CreatureTemplateAnimKit>();
+                var row = new Row<CreatureTemplateAnimkit>();
                 row.Data.Entry = animKit.Item1.Entry;
                 row.Data.AIID = animKit.Item1.AIID;
                 row.Data.MovementID = animKit.Item1.MovementID;
@@ -108,7 +108,7 @@ namespace WowPacketParser.SQL.Builders
                 rows.Add(row);
             }
 
-            return new SQLInsert<CreatureTemplateAnimKit>(rows).Build();
+            return new SQLInsert<CreatureTemplateAnimkit>(rows).Build();
         }
 
         [BuilderMethod(Units = true)]

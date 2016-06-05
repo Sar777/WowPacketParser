@@ -2,7 +2,7 @@
 
 namespace WowPacketParser.Store.Objects
 {
-    public class CreatureTemplateAnimKit : IDataModel
+    public class CreatureTemplateAnimkit : IDataModel
     {
         [DBFieldName("entry", true)]
         public uint? Entry;

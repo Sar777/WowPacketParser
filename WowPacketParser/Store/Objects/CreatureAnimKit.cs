@@ -2,7 +2,7 @@
 
 namespace WowPacketParser.Store.Objects
 {
-    public sealed class CreatureAnimKit : IDataModel
+    public sealed class CreatureAnimkit : IDataModel
     {
         [DBFieldName("guid", true)]
         public string GUID;
